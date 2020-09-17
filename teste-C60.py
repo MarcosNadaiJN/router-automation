@@ -14,27 +14,12 @@ ntp_secundario = 'b.ntp.br'
 #Inicialização do Browser
 
 browser = webdriver.Chrome(executable_path="F:\Drivers\chromedriver.exe")
-browser.get("https://www.google.com.br")
 browser.maximize_window()
 sleep(1)
 browser.get("http://192.168.0.1")
 sleep(2)
 
-'''
-def find_by_href(browser, link):
-    """
-    Encontrar o elemento 'a' com o link 'link'
-
-    Argumentos:
-        - browser = instancia do browser [Chrome]
-        - link = link que sera procurado em todos as tags a
-    """
-    elementos = browser.find_elements_by_tag_name('a')
-
-    for elemento in elementos:
-        if link in elemento.get_attribute('href'):
-            return elemento
-'''
+#Login Inicial no Roteador
 
 entradas = browser.find_elements_by_tag_name('input')       #Localiza todos os inputs da pagina, e armazena na lista 'entradas'.
 campo_senha = entradas[20]      #O Campo da senha, corresponde ao item 20 da lista
