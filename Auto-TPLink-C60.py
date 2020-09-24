@@ -1,6 +1,9 @@
 from selenium import webdriver
 from time import sleep
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 # Definições Iniciais
 senha = 'insert97'
@@ -27,22 +30,21 @@ try:
     campo_senha.send_keys(senha)       #Digita a senha
     browser.find_element_by_id('login-btn').click()     #Clica no Botão de login
     print('!--Login Efetuado com Sucesso--!')
-    sleep(5)
 
-    btn_avancado = browser.find_element_by_link_text('Avançado')        #Localiza Aba "Avançado"
-    btn_avancado.click()        #Acessa aba Avançado
-    print(btn_avancado.text)
+    btn_avancado = WebDriverWait(browser, 8).until(EC.presence_of_element_located((By.ID, 'internet_status')))   #Espera Status da Internet Carregar
+    btn_avancado = browser.find_element_by_link_text('Avançado').click()        #Acessa aba Avançado
+    print('Avançado')
     sleep(3)
 
-    btn_rede = browser.find_element_by_link_text('Rede')        #Localiza Botão "Rede"
-    btn_rede.click()        #Clica no Botão "Rede"
-    print(btn_rede.text)
-    sleep(1)
+    #btn_rede = WebDriverWait(browser, 5).until(EC.presence_of_element_located((By.ID, 'conn_status_internet')))
+    btn_rede = browser.find_element_by_link_text('Rede').click()  #Clica no Botão "Rede"
+    print('Rede')
 
-    servidor_dhcp = browser.find_element_by_link_text('Servidor DHCP')      #Localiza Botão "Servidor DHCP"
-    servidor_dhcp.click()       #Clica no Botão "Servidor DHCP"
-    print(servidor_dhcp.text)
-    sleep(2)
+    servidor_dhcp = WebDriverWait(browser, 1).until(EC.element_to_be_clickable((By.LINK_TEXT, 'Servidor DHCP')))
+    servidor_dhcp = browser.find_element_by_link_text('Servidor DHCP').click()     #Clica no Botão "Servidor DHCP"
+    print('Servidor DHCP')
+
+    sleep(0.5)
 
     dns1 = browser.find_element_by_xpath('//*[@id="dns1"]')     #Localiza Campo DNS Primario
     dns1.send_keys(Keys.CONTROL + "a")      #Seleciona o Conteudo do Campo
@@ -60,42 +62,46 @@ try:
     #salvar_dns.click()     #Clica no Botão de Salvar o DNS
     sleep(0.3)
     print('DNS Atualizado com Sucesso')
-    sleep(5)
 
+    '''
+    #------------------
+    
     wireless = browser.find_element_by_link_text('Wireless')        #Localiza Botão Wireless
     wireless.click()        #Clica no Botão Wireless
     print(wireless.text)
     sleep(2)
 
-    '''
+
     txbf = browser.find_element_by_link_text('TxBF,MU-MIMO')
     txbf.click()
     print(txbf.text)
     sleep(0.5)
 
-    checkbox_all = browser.find_elements_by_id('chk_enable_txbf')
-    checkbox = checkbox_all[0]
-    checkbox.is_selected()
-    
+    checkbox_all = browser.find_elements_by_xpath('//*[@id="txbf_set"]/div[1]/div[2]/div[1]/ul/li/div/label')
+    checked = checkbox_all.__getattribute__('class')
+    print(checked)
 
-    checkbox = browser.find_element_by_xpath('//*[@id="txbf_set"]/div[1]/div[2]/div[1]/ul/li/div/label')
-    checkbox.click()
+    sleep(30)
 
     salvar_txbf = browser.find_element_by_xpath('//*[@id="txbf_set"]/div[2]/div/div/div/div[1]/button/span[2]')
     salvar_txbf.click()
     print('')
-    
+
+    #------------------
     '''
 
-    sis_tools = browser.find_element_by_link_text('Ferramentas de Sistema')     #Localiza o "Ferramentas do Sistema"
-    sis_tools.click()     #Clica no Ferramentas do Sistema
-    print(sis_tools.text)
-    sleep(3)
-
-    ntp = browser.find_element_by_xpath('//*[@id="menu-advanced-system-tools-li"]/div/ul/li[1]/a/span[2]')      #Localiza o "Ajuste de Horario"
-    ntp.click()     #Clica no "Ajuste de Horario"
-    print(ntp.text)
+    wireless = browser.find_element_by_link_text('Wireless')  # Localiza Botão Wireless
+    wireless.click()  # Clica no Botão Wireless
+    print('Wireless')
     sleep(2)
+
+    sis_tools = browser.find_element_by_link_text('Ferramentas de Sistema').click()       #Localiza o "Ferramentas do Sistema" e Clica
+    print('Ferramentas do Sistema')
+    sleep(0.5)
+
+    ntp = browser.find_element_by_xpath('//*[@id="menu-advanced-system-tools-li"]/div/ul/li[1]/a/span[2]').click()      #Localiza o "Ajuste de Horario" e Clica
+    print('Ajuste de Horario')
+    sleep(1)
 
     ntp_server_1 = browser.find_element_by_id('time_set_ntp1')      #Localiza Campo NTP1
     ntp_server_1.send_keys(Keys.CONTROL + "a")      #Seleciona o Conteudo do Campo
@@ -103,10 +109,10 @@ try:
     ntp_server_1.send_keys(ntp_primario)      #Digita o Servidor NTP1 Atualizado
     print(f'NTP Primario Atualizado para: {ntp_primario}')
 
-    ntp_server_1 = browser.find_element_by_id('time_set_ntp2')      #Localiza Campo NTP2
-    ntp_server_1.send_keys(Keys.CONTROL + "a")      #Seleciona o Conteudo do Campo
-    ntp_server_1.send_keys(Keys.DELETE)     #Apaga o Conteudo Existente
-    ntp_server_1.send_keys(ntp_secundario)      #Digita o Servidor NTP2 Atualizado
+    ntp_server_2 = browser.find_element_by_id('time_set_ntp2')      #Localiza Campo NTP2
+    ntp_server_2.send_keys(Keys.CONTROL + "a")      #Seleciona o Conteudo do Campo
+    ntp_server_2.send_keys(Keys.DELETE)     #Apaga o Conteudo Existente
+    ntp_server_2.send_keys(ntp_secundario)      #Digita o Servidor NTP2 Atualizado
     print(f'NTP Secundario Atualizado para: {ntp_secundario}')
 
     save_ntp = browser.find_element_by_xpath('//*[@id="time_setting"]/div[6]/div/div/div/div[1]/button/span[2]')        #Localiza o Botão de Salvar NTP
