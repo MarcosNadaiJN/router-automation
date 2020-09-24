@@ -6,30 +6,19 @@
 
 from c60_script import *
 from wr849_script import *
+from time import sleep
+from funcoes import *
+from c60_script_funcoes import c60_completo_quebrado_em_funcoes
 import os
+from definicoes_iniciais import *
 
 def main():
-
-    from selenium import webdriver
-    from time import sleep
-    from funcoes import trata_titulo, ler_csv, trata_ip, cont_ip
-
-    # Definições Iniciais
-    senha = 'insert97'
-
-    dns_primario = '177.55.32.237'
-    dns_secundario = '8.8.8.8'
-
-    ntp_primario = 'a.btp.br'
-    ntp_secundario = 'b.ntp.br'
-
-    arquivo_csv = 'testecsv.csv'
 
     #ip = 'https://emulator.tp-link.com/Emulator_TL-WR849N(BR)6.20/index.htm'
     #http://192.168.0.1
 
     # Inicialização do Browser
-    browser = webdriver.Chrome(executable_path="F:\Drivers\chromedriver.exe")
+    browser = abre_navegador()
     browser.maximize_window()
 
     lista_ip = ler_csv(arquivo_csv)
@@ -49,12 +38,16 @@ def main():
         titulo = trata_titulo(titulo)  # Trata String do Titulo
 
         if titulo == 'archerc60':
-            c60_completo(browser, senha, dns_primario, dns_secundario, ntp_primario, ntp_secundario)
+            c60_completo_quebrado_em_funcoes(browser)
         elif titulo == 'tlwr849n':
             wr849_completo(browser, senha, dns_primario, dns_secundario, ntp_primario, ntp_secundario)
+        else:
+            print('Modelo Não Compativel')
 
         j += 1
         os.system('cls')
+
+    print('LISTA FINALIZADA')
 
 
 
