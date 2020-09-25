@@ -4,7 +4,6 @@
 #4 - Marcar IP' como Visitado, e escrever se foi possivel acessar ou não
 #5 - Pegar Proximo Ip na Planilha e Reiniciar o Processo FEITO
 
-from c60_script import *
 from wr849_script import *
 from time import sleep
 from funcoes import *
@@ -14,13 +13,10 @@ from definicoes_iniciais import *
 
 def main():
 
-    #ip = 'https://emulator.tp-link.com/Emulator_TL-WR849N(BR)6.20/index.htm'
-    #http://192.168.0.1
-
     # Inicialização do Browser
-    browser = abre_navegador()
     browser.maximize_window()
 
+    #Leitura do CSV com os IP's de Acesso
     lista_ip = ler_csv(arquivo_csv)
     i = cont_ip(lista_ip)
     print(f"Total de IP's Identificados no Arquivo: {i}")
@@ -32,10 +28,10 @@ def main():
         print(f'Acessando: {ip}')
 
         browser.get(ip)
-        sleep(2)
+        sleep(3)
 
-        titulo = browser.title  # Captura titulo da Pagina (Modelo do Roteador)
-        titulo = trata_titulo(titulo)  # Trata String do Titulo
+        titulo = browser.title      #Captura titulo da Pagina (Modelo do Roteador)
+        titulo = trata_titulo(titulo)       #Trata String do Titulo
 
         if titulo == 'archerc60':
             c60_completo_quebrado_em_funcoes(browser)
