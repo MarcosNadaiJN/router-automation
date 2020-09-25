@@ -46,8 +46,11 @@ def cont_ip (lista):
 
 def seleciona_deleta(campo):
     from selenium.webdriver.common.keys import Keys
+    from time import sleep
     campo.send_keys(Keys.CONTROL + "a")
+    sleep(0.15)
     campo.send_keys(Keys.DELETE)
+    sleep(0.15)
 
 
 
@@ -56,3 +59,4 @@ def seleciona_deleta(campo):
 def abre_navegador():
     from selenium import webdriver
     return webdriver.Chrome(executable_path="F:\Drivers\chromedriver.exe")
+
