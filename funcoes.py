@@ -1,5 +1,4 @@
 #Tratamento de Titulo
-
 def trata_titulo (titulo_original):
     titulo = titulo_original
     titulo = titulo.lower()
@@ -11,7 +10,6 @@ def trata_titulo (titulo_original):
 
 
 #Tratamento do IP de Acesso
-
 def trata_ip (ip_acesso):
     ip_acesso = str(ip_acesso)
     ip_acesso = ip_acesso.replace("['", '')
@@ -22,20 +20,16 @@ def trata_ip (ip_acesso):
 
 
 #Leitura CSV
-
 def ler_csv (nome_arquivo):
     import csv
-
     with open(nome_arquivo) as csv_file:
         arquivo = csv.reader(csv_file)
         lista = list(arquivo)
-
     return lista
 
 
 
 #Contagem da Lista de IP's
-
 def cont_ip (lista):
     tamanho = len(lista)
     return tamanho
@@ -43,7 +37,6 @@ def cont_ip (lista):
 
 
 # CRTL A + CRTL DEL
-
 def seleciona_deleta(campo):
     from selenium.webdriver.common.keys import Keys
     from time import sleep
@@ -55,8 +48,18 @@ def seleciona_deleta(campo):
 
 
 # Browser
-
 def abre_navegador():
     from selenium import webdriver
     return webdriver.Chrome(executable_path="F:\Drivers\chromedriver.exe")
 
+
+# Indentifica Modelo do Roteador e Roda o Script Correspondente
+def identifica_modelo(titulo):
+    from c60_script_funcoes import c60_completo_quebrado_em_funcoes
+    if titulo == 'archerc60':
+        c60_completo_quebrado_em_funcoes()
+    elif titulo == 'tlwr940n':
+        print('TL-WR949N')
+        #função do 949
+    else:
+        print('Modelo não localizado na Biblioteca')
