@@ -1,6 +1,6 @@
 from c60_funcoes import *
 
-def c60_completo_quebrado_em_funcoes(browser):
+def c60_completo_quebrado_em_funcoes():
     try:
         c60_login()
         sleep(1)
@@ -8,28 +8,31 @@ def c60_completo_quebrado_em_funcoes(browser):
         if 'index' in url_atual:
             try:
                 c60_botao_avancado()
-                sleep(3)
-                c60_botao_rede()
-                sleep(1.5)
-                c60_botao_DHCP()
-                sleep(3)
-                c60_DHCP()
+                try:
+                    sleep(3)
+                    c60_botao_rede()
+                    sleep(1.5)
+                    c60_botao_DHCP()
+                    sleep(3)
+                    c60_DHCP()
+                except:
+                    print('Não Foi Possivel configurar o DHCP')
+                try:
+                    c60_wireless()
+                except:
+                    print('Não foi possivel configurar WIFI')
+                try:
+                    c60_scroll_sidebarr()
+                    sleep(0.5)
+                    c60_botao_sis_tools()
+                    sleep(1)
+                    c60_botao_ntp()
+                    c60_ntp()
+                    c60_logoff()
+                except:
+                    print('Não foi possivel Atualizar o NTP')
+                    c60_logoff()
             except:
                 print('Botão Avançado não localizado')
-            try:
-                c60_wireless()
-            except:
-                print('Não foi possivel configurar WIFI')
-            try:
-                c60_scroll_sidebarr()
-                sleep(0.5)
-                c60_botao_sis_tools()
-                sleep(1)
-                c60_botao_ntp()
-                c60_ntp()
-                c60_logoff()
-            except:
-                print('Não foi possivel Atualizar o NTP')
-                c60_logoff()
     except:
         print('Não foi possivel fazer login')
