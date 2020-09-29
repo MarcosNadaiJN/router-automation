@@ -5,15 +5,17 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
-def c60_login():
+def c60_login(tentativa_senha):
+    from funcoes import seleciona_deleta
     entradas = browser.find_elements_by_tag_name('input')  # Localiza todos os inputs da pagina, e armazena na lista 'entradas'.
     campo_senha = entradas[20]  # O Campo da senha, corresponde ao item 20 da lista
-    campo_senha.send_keys(senha)  # Digita a senha
+    seleciona_deleta(campo_senha)
+    campo_senha.send_keys(tentativa_senha)  # Digita a senha
     browser.find_element_by_id('login-btn').click()  # Clica no Botão de login
 
-def confirma_login():
+def c60_confirma_login():
     url = browser.current_url
-    return url
+    return 'index' in url
 
 def c60_botao_avancado():
     btn_avancado = WebDriverWait(browser, 8).until(EC.presence_of_element_located((By.ID, 'internet_status')))  #Espera Status da Internet Carregar
