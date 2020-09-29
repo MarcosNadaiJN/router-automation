@@ -1,6 +1,6 @@
-from funcoes import abre_navegador
+from funcoes import abre_navegador, lista_senhas
 
-senha = 'insert97'
+senha = lista_senhas()
 
 dns_primario = '177.55.32.237'
 dns_secundario = '8.8.8.8'
