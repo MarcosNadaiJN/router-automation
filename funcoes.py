@@ -10,12 +10,11 @@ def trata_titulo (titulo_original):
 
 
 #Tratamento do IP de Acesso
-def trata_ip (ip_acesso):
-    ip_acesso = str(ip_acesso)
-    ip_acesso = ip_acesso.replace("['", '')
-    ip_acesso = ip_acesso.replace("']", '')
-    ip_acesso = 'http://'+ip_acesso
-    return ip_acesso
+def trata_lista (item_lista):
+    item_lista = str(item_lista)
+    item_lista = item_lista.replace("['", '')
+    item_lista = item_lista.replace("']", '')
+    return item_lista
 
 
 
@@ -25,14 +24,8 @@ def ler_csv (nome_arquivo):
     with open(nome_arquivo) as csv_file:
         arquivo = csv.reader(csv_file)
         lista = list(arquivo)
-    return lista
-
-
-
-#Contagem da Lista de IP's
-def cont_ip (lista):
-    tamanho = len(lista)
-    return tamanho
+        tamanho = len(lista)
+    return lista, tamanho
 
 
 
@@ -57,9 +50,33 @@ def abre_navegador():
 def identifica_modelo(titulo):
     from c60_script_funcoes import c60_completo_quebrado_em_funcoes
     if titulo == 'archerc60':
-        c60_completo_quebrado_em_funcoes()
+        c60_completo_quebrado_em_funcoes(titulo)
     elif titulo == 'tlwr940n':
         print('TL-WR949N')
         #função do 949
     else:
         print('Modelo não localizado na Biblioteca')
+
+
+
+# Coleta a lista de senhas contida no arquivo CSV "senhas.csv"
+def lista_senhas():
+    import csv
+    with open('senhas.csv') as csv_file:
+        lista_senhas = csv.reader(csv_file)
+        lista_senhas = list(lista_senhas)
+        tamanho = len(lista_senhas)
+        lista_senhas = trata_lista(lista_senhas)
+        return lista_senhas, tamanho
+
+
+
+def tentativas_login(titulo):
+    from c60_funcoes import c60_confirma_login, c60_login
+    lista, i = lista_senhas()
+    login_bem_sucedido = c60_confirma_login()
+    j = 0
+    while j <= i or login_bem_sucedido == False:
+        if titulo == 'archerc60':
+            c60_login(lista[j])
+        j += 1
