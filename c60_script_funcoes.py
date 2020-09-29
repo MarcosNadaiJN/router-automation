@@ -1,11 +1,13 @@
 from c60_funcoes import *
+from funcoes import tentativas_login
 
-def c60_completo_quebrado_em_funcoes():
+
+def c60_completo_quebrado_em_funcoes(titulo):
     try:
-        c60_login()
+        tentativas_login(titulo)
         sleep(1)
-        url_atual = confirma_login()
-        if 'index' in url_atual:
+        realizado_login = c60_confirma_login()
+        if realizado_login:
             try:
                 c60_botao_avancado()
                 try:
@@ -34,5 +36,6 @@ def c60_completo_quebrado_em_funcoes():
                     c60_logoff()
             except:
                 print('Botão Avançado não localizado')
-    except:
+    except Exception as ex:
         print('Não foi possivel fazer login')
+        print(ex)
