@@ -5,13 +5,30 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
-def c60_login(tentativa_senha):
+def c60_login(tentativa_senha, j):
     from funcoes import seleciona_deleta
-    entradas = browser.find_elements_by_tag_name('input')  # Localiza todos os inputs da pagina, e armazena na lista 'entradas'.
-    campo_senha = entradas[20]  # O Campo da senha, corresponde ao item 20 da lista
-    seleciona_deleta(campo_senha)
-    campo_senha.send_keys(tentativa_senha)  # Digita a senha
-    browser.find_element_by_id('login-btn').click()  # Clica no Botão de login
+    '''
+        Roteador C60, exibe uma mensagemd e erro, informando que erramos 5 tentativas de login,
+        nesta mensagem é necessario clicar em OK, para que o campo da senha seja acessivel novamente,
+        após isso temos mais 5 tentativas de Login.
+    '''
+    if j < 5: #5 Primeiras tentativas de Login
+        entradas = browser.find_elements_by_tag_name('input')  # Localiza todos os inputs da pagina, e armazena na lista 'entradas'.
+        campo_senha = entradas[20]  # O Campo da senha, corresponde ao item 20 da lista
+        seleciona_deleta(campo_senha)
+        sleep(0.3)
+        campo_senha.send_keys(tentativa_senha)  # Digita a senha
+        sleep(0.3)
+        browser.find_element_by_id('login-btn').click()  # Clica no Botão de login
+    elif j <= 9: #5 Ultimas tentativas de login
+        browser.find_element_by_xpath('//*[@id="left-attempts-msg-container"]/div[4]/div/div/div[2]/div/div/button').click() #Clica em OK na mensagem de erro de Login
+        entradas = browser.find_elements_by_tag_name('input')  # Localiza todos os inputs da pagina, e armazena na lista 'entradas'.
+        campo_senha = entradas[20]  # O Campo da senha, corresponde ao item 20 da lista
+        seleciona_deleta(campo_senha)
+        sleep(0.3)
+        campo_senha.send_keys(tentativa_senha)  # Digita a senha
+        sleep(0.3)
+        browser.find_element_by_id('login-btn').click()  # Clica no Botão de login
 
 def c60_confirma_login():
     url = browser.current_url
@@ -92,5 +109,5 @@ def c60_ntp():
 def c60_logoff():
     logoff = browser.find_element_by_id('top-control-logout').click()  # Localiza Botão de Logoff
     confirmacao_logoff = browser.find_element_by_xpath('/html/body/div[5]/div[2]/div[4]/div/div/div[2]/div/div[2]/button')  # Confirma Logoff
-    confirmacao_logoff.click()  # Clica na Confirmação
+    confirmacao_logoff.click()      #Clica na Confirmação
     print('Logoff Realizado com Sucesso')
