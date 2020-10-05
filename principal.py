@@ -9,21 +9,19 @@ def main():
     browser.maximize_window()
 
     #Leitura do CSV com os IP's de Acesso
-    lista_ip = ler_csv(arquivo_csv)
-    i = cont_ip(lista_ip)
+    lista_ip, i = ler_csv('testecsv.csv')
     print(f"Total de IP's Identificados no Arquivo: {i}")
 
     j = 0
     while j <= i-1:
 
-        ip = trata_ip(lista_ip[j])
+        ip = trata_lista(lista_ip[j])
         print(f'Acessando: {ip}')
 
-        browser.get(ip)
-        sleep(3)
+        browser.get('http://'+ip)           #Acessa IP contido no CSV
+        sleep(2)
 
-        titulo = browser.title      #Captura titulo da Pagina (Modelo do Roteador)
-        titulo = trata_titulo(titulo)       #Trata String do Titulo
+        titulo = trata_titulo(browser.title)            #Captura titulo da Pagina (Modelo do Roteador) e Trata a String
 
         identifica_modelo(titulo)
 
