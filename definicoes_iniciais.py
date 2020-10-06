@@ -1,7 +1,7 @@
 from funcoes import abre_navegador, ler_csv
 
 senha, tamanho = ler_csv('senhas.csv')
-lista_ip, tamanho_lista_ip = ler_csv('testecsv.csv')
+lista_ip, tamanho_lista_ip = ler_csv('listadeips.csv')
 
 dns_primario = '177.55.32.237'
 dns_secundario = '8.8.8.8'
@@ -9,8 +9,11 @@ dns_secundario = '8.8.8.8'
 ntp_primario = 'a.btp.br'
 ntp_secundario = 'b.ntp.br'
 
-arquivo_csv = 'testecsv.csv'
+arquivo_csv = 'listadeips.csv'
 
 
-#Abre Browser
+# Abre Browser
 browser = abre_navegador()
+
+
+portas = [':8085', ':80', ':8080', ':8086', ':8888']
