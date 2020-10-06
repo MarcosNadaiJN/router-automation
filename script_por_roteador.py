@@ -1,8 +1,9 @@
 from c60_funcoes import *
-from funcoes import tentativas_login
+from funcoes import tentativas_login, escrita_csv_log
 
 
-def c60_completo_dividido_em_funcoes(titulo):
+def c60_completo_dividido_em_funcoes(titulo, j):
+    global confirmacao_login, DHCP, NTP
     try:
         confirmacao_login = tentativas_login(titulo)
         sleep(1)
@@ -44,4 +45,4 @@ def c60_completo_dividido_em_funcoes(titulo):
     except Exception as ex:
         print('Não foi possivel fazer login')
         print(ex)
-    return confirmacao_login, DHCP, NTP
+    escrita_csv_log(confirmacao_login, DHCP, NTP, j)
