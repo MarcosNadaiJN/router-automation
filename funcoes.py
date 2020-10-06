@@ -26,6 +26,17 @@ def ler_csv (nome_arquivo):
         tamanho_lista = len(lista)
     return lista, tamanho_lista
 
+#Escrita CSV_log
+def escrita_csv_log (confirmacao_login, DHCP, NTP, j):
+    import csv
+    from definicoes_iniciais import lista_ip, tamanho_lista_ip
+    with open('LOG_CSV.csv', 'w', newline='') as csv_file:
+        campos = ['IP', 'LOGIN', 'DHCP', 'NTP']
+        writer = csv.DictWriter(csv_file, fieldnames=campos)
+
+        writer.writeheader()
+        writer.writerow({'IP': lista_ip[j], 'LOGIN': confirmacao_login, 'DHCP': DHCP, 'NTP': NTP})
+
 
 # CRTL A + CRTL DEL
 def seleciona_deleta(campo):
@@ -47,12 +58,13 @@ def abre_navegador():
 def identifica_modelo(titulo):
     from script_por_roteador import c60_completo_dividido_em_funcoes
     if titulo == 'archerc60':
-        c60_completo_dividido_em_funcoes(titulo)
+        confirmacao_login, DHCP, NTP = c60_completo_dividido_em_funcoes(titulo)
     elif titulo == 'tlwr940n':
         print('TL-WR949N')
         #função do 949
     else:
         print('Modelo não localizado na Biblioteca')
+    return confirmacao_login, DHCP, NTP
 
 
 def tentativas_login(titulo):
