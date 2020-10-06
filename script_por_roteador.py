@@ -16,8 +16,10 @@ def c60_completo_dividido_em_funcoes(titulo):
                     c60_botao_DHCP()
                     sleep(3)
                     c60_DHCP()
+                    DHCP = 1
                 except:
                     print('Não Foi Possivel configurar o DHCP')
+                    DHCP = 0
                 try:
                     c60_wireless()
                 except:
@@ -29,9 +31,11 @@ def c60_completo_dividido_em_funcoes(titulo):
                     sleep(1)
                     c60_botao_ntp()
                     c60_ntp()
+                    NTP = 1
                     c60_logoff()
                 except:
                     print('Não foi possivel Atualizar o NTP')
+                    NTP = 0
                     c60_logoff()
             except:
                 print('Botão Avançado não localizado')
@@ -40,3 +44,4 @@ def c60_completo_dividido_em_funcoes(titulo):
     except Exception as ex:
         print('Não foi possivel fazer login')
         print(ex)
+    return confirmacao_login, DHCP, NTP
